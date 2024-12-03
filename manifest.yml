@@ -1,0 +1,10 @@
+---
+applications:
+- name: EmergencyApp
+  random-route: true
+  path: ./
+  memory: 128M
+  buildpacks: 
+  - python_buildpack
+  command: python manage.py runserver 0.0.0.0:$PORT
+

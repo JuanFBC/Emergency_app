@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estado de Emergencia</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 400px;
+            background-color: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .btn-nombre-usuario {
+            background-color: white;
+            border: 2px solid #ccc;
+            color: #333;
+            padding: 10px;
+            border-radius: 10px;
+            font-size: 18px;
+            width: 100%;
+            margin-bottom: 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .btn-nombre-usuario:hover {
+            background-color: #f0f0f0;
+        }
+
+        .btn-nombre-usuario .status-indicator {
+            background-color: green;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+        }
+
+        .btn-nombre-usuario .status-indicatorF {
+            background-color: red;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+        }
+
+        .info-container {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            padding: 15px;
+            border-radius: 10px;
+            background-color: #f9f9f9;
+        }
+
+        .info-container .info {
+            text-align: left;
+        }
+
+        .info-container .info p {
+            margin: 5px 0;
+            color: #333;
+        }
+
+        .divider {
+            border-left: 1px solid #ccc;
+            margin: 0 15px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            appearance: none;
+            background-color: #fff;
+            background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMiAxMiIgd2lkdGg9IjE4IiBoZWlnaHQ9IjE4Ij48cGF0aCBmaWxsPSIjY2NjIiBkPSJNNiA4LjU5NmwtMy41Mi0zLjUwM2EuNzUuNzUgMCAwMSAxLjA2LTEuMDYybDIuOTk0IDIuOTc4IDIuOTk0LTIuOTc4YS43NS43NSAwIDEgMSAxLjA2IDEuMDYybC0zLjUyIDMuNTAzYS43NS43NSAwIDExLTEuMDYgMHoiLz48L3N2Zz4=');
+            background-repeat: no-repeat;
+            background-position: right 10px center;
+            background-size: 12px;
+        }
+
+        .btn-modificar {
+            background-color: #899FE9;
+            color: white;
+            padding: 15px;
+            font-size: 16px;
+            border: none;
+            border-radius: 10px;
+            width: 100%;
+            margin-bottom: 15px;
+            cursor: pointer;
+        }
+
+        .btn-modificar:hover {
+            background-color: #54659c;
+        }
+
+        .btn-regresar {
+            background-color: #555789;
+            color: white;
+            padding: 15px;
+            font-size: 16px;
+            border: none;
+            border-radius: 10px;
+            width: 100%;
+            cursor: pointer;
+        }
+
+        .btn-regresar:hover {
+            background-color: #2f305a;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Botón con nombre del usuario y un indicador de estado -->
+        <button class="btn-nombre-usuario">
+            {{ cola.0.0 }}
+
+            {% if cola.0.2 == True %}
+            <div class="status-indicator"></div>
+            {% endif %}
+            {% if cola.0.2 == False %}
+            <div class="status-indicatorF"></div>
+            {% endif %}
+        </button>
+
+        <form action="actu_estados" method="post">
+            {% csrf_token %}
+            <div class="info-container">
+                <div class="info">
+                    <p><strong>Localidad:</strong> {{ cola.0.1 }}</p>
+
+                    {% if cola.0.2 == True %}
+                    <p><strong>Estado:</strong> A salvo</p>
+                    {% endif %}
+                    {% if cola.0.2 == False %}
+                    <p><strong>Estado:</strong> Comprometida</p>
+                    {% endif %}
+                </div>
+                <div class="divider"></div>
+                <div class="info">
+                    <p><strong>Última actualización:</strong></p>
+                    <p>{{ cola.0.3 }}</p>
+                </div>
+            </div>
+
+            <!-- Formulario para cambiar el estado -->
+            <div class="form-group">
+                <label for="estado">Cambiar estado</label>
+                <select id="estado" name="estado">
+                    <option value="FALSE">Situación comprometida</option>
+                    <option value="TRUE">A salvo</option>
+                </select>
+            </div>
+            <input type="text" name="ids" value="{{ cola.0.4 }}" style="display:none;">
+
+            <!-- Botón de modificar -->
+            <button class="btn-modificar" type="submit">Modificar</button>
+        </form>
+
+        <!-- Botón de regresar -->
+        <button class="btn-regresar" onclick="window.location.href='{% url 'colaborador' 0 %}'">Regresar</button>
+    </div>
+</body>
+
+</html>

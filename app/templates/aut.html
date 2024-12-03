@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estado Localidad {{colab.0.1}}</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            text-decoration: none;
+            text-decoration-line: none;
+            
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            text-decoration-line: none;
+            flex: 1; /* Hace que el contenedor ocupe todo el espacio disponible entre el header y el footer */
+        }
+
+        .header {
+            text-align: center;
+            padding: 10px;
+            background-color: white;
+            font-size: 30px;
+            font-weight: bold;
+            color: #2e2c52;
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+            background-color: white;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+        .search-bar input {
+            border: none;
+            flex-grow: 1;
+            padding: 10px;
+            font-size: 16px;
+        }
+
+        .search-bar img {
+            width: 20px;
+            height: 20px;
+        }
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .list-item {
+            background-color: white;
+            padding: 15px;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            text-decoration: none;
+            overflow: hidden;
+            font-family: 'Inter', sans-serif;
+            text-decoration-line: none;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .list-item h3 {
+            margin: 0;
+            overflow: hidden;
+            font-size: 16px;
+            color: #282179;
+            text-decoration: none;
+            font-family: 'Inter', sans-serif;
+            text-decoration-line: none;
+        }
+
+        .list-item p {
+            margin: 5px 0;
+            overflow: hidden;
+            font-size: 14px;
+            color: #333;
+            text-decoration: none;
+            text-decoration-line: none;
+            overflow: hidden;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .status-indicator {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            text-decoration: none;
+        }
+
+        .status-safe {
+            background-color: green;
+        }
+
+        .status-compromised {
+            background-color: red;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 10px;
+            background-color: #ddd;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+        @media (max-width: 768px) {
+            .list-item {
+                padding: 10px;
+            }
+
+            .grid-container {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            }
+        }
+
+        @media (max-width: 480px) {
+            .search-bar {
+                flex-direction: column;
+            }
+
+            .grid-container {
+                grid-template-columns: 1fr;
+            }
+
+            .list-item {
+                padding: 8px;
+            }
+        }
+        .top-line {
+            width: 100%;
+            height: 80px; 
+            background-color: #2e2c52; 
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+        .btn-regresar {
+            background-color: #555789;
+            color: white;
+            padding: 15px;
+            font-size: 16px;
+            border: none;
+            border-radius: 10px;
+            width: 100%;
+            
+            cursor: pointer;
+        }
+
+        .btn-regresar:hover {
+            background-color: #2f305a;
+        }
+    </style>
+</head>
+<body>
+    <div class="top-line">
+        <button style="width: 100px; margin-top: 10px ; margin-left: 10px" class="btn-regresar" onclick="window.location.href='{% url 'menu'%}'">Regresar</button>
+    </div>
+    <div class="container" style="margin-top: 80px">
+
+        {% if id == "0" %}
+        <div class="header">Colaboradores</div>
+        {% endif %}
+
+        {% if id != "0" %}
+        <div class="header">Auditoria</div>
+        {% endif %}
+        </div>
+        
+
+        <!-- Contenedor de la cuadrícula -->
+        <div class="grid-container">
+            {% for colab in colab %}
+
+            <div class="list-item">
+                <div>
+                    <p>Username: {{colab.1}}</p>
+                    <p>id servidor: {{colab.4}}</p>
+                    <p>Pagina: {{colab.2}}</p>
+                    <p>Hora: {{colab.3}}</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div> <!-- Fin de grid-container -->
+
+    </div>
+
+    <div class="footer">
+    </div>
+
+
+
+
+</body>
+</html>

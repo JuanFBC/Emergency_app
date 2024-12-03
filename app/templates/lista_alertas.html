@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emergencias</title>
+    <style>
+        .alert {
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            display: block;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .alert-error {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px; /* Aumenté el ancho máximo */
+            margin: 0 auto;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+
+        .header {
+            text-align: center;
+            padding: 15px;
+            background-color: #c8c7ff;
+            color: #2e2c52;
+            font-size: 24px;
+            font-weight: bold;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin: 20px 0;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #322C70;
+        }
+
+        .form-group select,
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .card {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        .card h3 {
+            margin-top: 0;
+            font-size: 20px;
+            color: #3d3872;
+        }
+
+        .card p {
+            margin: 8px 0;
+            font-size: 16px;
+            color: #333;
+        }
+
+        .card .close-button {
+            background-color: #555789;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+
+        .card .close-button:hover {
+            background-color: #33345f;
+        }
+
+        .create-alert {
+            background-color: #899FE9;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 10px;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+        .menu {
+            background-color: #4059AF;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 10px;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+
+        .create-alert:hover {
+            background-color: #5a6ca5;
+        }
+
+        .footer {
+            text-align: center;
+            background-color: #ddd;
+            border-radius: 10px;
+            margin-bottom: auto;
+            text-align: center;
+            padding: 10px;
+            background-color: #ddd;
+        }
+
+        .footer img {
+            width: 50px;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        button {
+            padding: 10px;
+            background-color: #2C3C70;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            color: white;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #252e4b;
+        }
+
+        .messages {
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Ajuste de columnas */
+            gap: 20px; /* Espacio entre tarjetas */
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            .header {
+                font-size: 20px;
+            }
+
+            .form-group label {
+                font-size: 14px;
+            }
+
+            .form-group select,
+            .form-group input {
+                font-size: 14px;
+            }
+
+            .create-alert {
+                font-size: 14px;
+            }
+        }
+        .top-line {
+            width: 100%;
+            height: 60px;
+            background-color: #2e2c52;
+            position: fixed; /* Cambiar a fixed para que se quede en la parte superior */
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+    </style>
+</head>
+
+<body>
+    
+    <div class="top-line"><div class="grid-container"> <a href="Emergencia/crear_alerta">
+    </a></div></div>
+
+    <div class="container" style="margin-top: 80px">
+        <div class="header">Emergencias</div>
+
+        <div class="form-group">
+            <label for="localidad">Localidad</label>
+            <select id="localidad">
+                <option value="">Selecciona localidad</option>
+                <option value="usaquen">Usaquen</option>
+                <option value="usme">Usme</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="fecha">Fecha vigencia</label>
+            <input type="date" id="fecha">
+        </div>
+
+        <!-- Contenedor de cuadrícula para las alertas -->
+        <div class="grid-container">
+<a href="Emergencia/crear_alerta">
+    <div class="create-alert">Crear alerta</div>
+</a>
+<a href="volver_menu">
+    <div class="create-alert">Regresar</div>
+        </a>
+    </div>
+        <div class="grid-container">
+            
+            {% for alertas in alertas %}
+            <div class="card">
+                <a href="{% url 'colaborador' alertas.0 %}">
+                    <div>
+                        <h3>Localidad: {{ alertas.1 }}</h3>
+                        <p>Colaboradores: {{ alertas.2 }}</p>
+                        <p>A salvo: {{ alertas.3 }}</p>
+                        <p>No A salvo: {{ alertas.4 }}</p>
+                        <p>Última Actualización: 28/08/2024 - 8:50 PM</p>
+                    </div>
+                </a>
+                <a href="{% url 'cerrar_alertas' alertas.0 %}">
+                    <button class="close-button">Cerrar Caso</button>
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+
+
+    </div>
+</body>
+
+</html>
